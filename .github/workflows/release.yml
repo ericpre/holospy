@@ -53,6 +53,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
+      - name: Download dist
+        uses: actions/download-artifact@v5
+        with:
+          name: dist
+          path: dist
+
+      - name: Display downloaded files
+        run: |
+          ls -shR
+
       - name: Extract release notes
         id: release_notes
         uses: hyperspy/.github/.github/actions/extract-release-notes@main
@@ -65,3 +75,4 @@ jobs:
         uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b
         with:
           body: ${{ steps.release_notes.outputs.release-notes }}
+          files: dist/*
