@@ -51,7 +51,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
+
+      - name: Extract release notes
+        id: release_notes
+        uses: hyperspy/.github/.github/actions/extract-release-notes@main
+        with:
+          changelog: CHANGES.rst
+          heading-level: '='
+
       - name: Create Release
-        if: ${{ startsWith(github.ref, 'refs/tags/') && github.repository_owner == 'hyperspy' }}
-        uses: softprops/action-gh-release@aec2ec56f94eb8180ceec724245f64ef008b89f5
+        id: create_release
+        uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b
+        with:
+          body: ${{ steps.release_notes.outputs.release-notes }}
