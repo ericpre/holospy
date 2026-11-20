@@ -9,7 +9,7 @@ jobs:
     timeout-minutes: 30
     defaults:
       run:
-        shell: bash -el {0}
+        shell: bash -eo pipefail {0}
     env:
       MPLBACKEND: agg
     strategy:
@@ -54,7 +54,7 @@ jobs:
 
       - name: Install
         run: |
-          pip install -e .[tests]
+          pip install --only-binary=:all: -e .[tests]
 
       - name: Pip list
         run: |
