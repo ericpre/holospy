@@ -54,7 +54,7 @@ jobs:
 
       - name: Install
         run: |
-          pip install --only-binary=:all: -e .[tests]
+          pip install -e .[tests]
 
       - name: Pip list
         run: |
